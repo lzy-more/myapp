@@ -60,6 +60,7 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                     this.$message.success('登录成功!')
+                this.$cookie.set('token','213551daff5sa66f56rf2r31')
                     this.$router.push({path:"/index"})
                     } else {
                         // console.log('error submit!!');

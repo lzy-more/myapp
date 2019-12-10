@@ -2,57 +2,61 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 // 引入组件
-import home from "./components/home.vue";
-import about from "./components/about.vue";
+import home from "./components/view/thirdNav/home.vue";
+import about from "./components/view/firstNav/about.vue";
 import index from "./components/index.vue"
-import register from "./components/register.vue"
-import login from "./components/login.vue"
+
 // 要告诉 vue 使用 vueRouter
 Vue.use(VueRouter);
 
-const routes = [
-    {
+const routes = [{
         path: '/index',
+        meta: {
+            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
+            },
         component: index,
-        children: [
-            {
+        children: [{
                 path: '/',
+                component: () => import('./components/view/common/welcome.vue')
+            },
+            {
+                path: '/home',
                 component: home
             },
             {
                 path: "/about",
                 component: about
-            }
+            },
+            {
+                path: '/HelloWorld',
+                component: () => import('./components/view/seccondNav/HelloWorld.vue')
+            },
+            {
+                path: '/404',
+                component: () => import('./components/view/common/404.vue')
+            },
+
         ]
     },
     {
-        path:'/',
-        component:register
+        path: '/',
+        component: () => import('./components/view/lg+rg/register.vue')
     },
     {
-        path:'/login',
-        component:login
+        path: '/login',
+        component: () => import('./components/view/lg+rg/login.vue')
+    },
+    {
+        path: '*',
+        redirect: '/404'
     }
+
 
 ]
 
 var router = new VueRouter({
     routes,
-    mode:'history'
+    mode: 'history'
 })
-//注册导航守卫,路由切换之前执行
-router.beforeEach((to,from,next)=>{
-    //去的路由
-    // console.log(to);
-    //来的路由
-    if(to.matched.length==0){
-        //不存在
-        // next('/error')
-    }else{
-        //必须要执行的,不执行的话,会和node.js中的中间件一样,不会往后走了
-        next()
-    }
-    
-})
-export default router;
 
+export default router;

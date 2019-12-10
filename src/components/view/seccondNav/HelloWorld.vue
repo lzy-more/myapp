@@ -6,7 +6,7 @@
       <br>
         <button @click="handleActionsAdd(10)">异步增加</button>
     <button @click="handleActionsReduce(10)">异步减少</button>
-    <h4>{{count}}--</h4>
+    <!-- <h4>{{count}}--</h4> -->
   
   </div>
 </template>
